@@ -1,0 +1,7 @@
+services:
+  employees-app:
+    image: employees-app
+    ports:
+      - 8085:8080
+    environment:
+      - HELLO_MESSAGE=Hello from Compose!
