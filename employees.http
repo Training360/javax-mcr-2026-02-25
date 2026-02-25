@@ -4,6 +4,9 @@ GET http://localhost:8080/api/employees
 ### Find by id
 GET http://localhost:8080/api/employees/1
 
+### Find by id
+GET http://localhost:8080/api/employees/800
+
 ### Join employee
 POST http://localhost:8080/api/employees
 Content-Type: application/json
@@ -18,6 +21,15 @@ Content-Type: application/json
 
 {
   "id": 1,
+  "name": "John Doe Doe"
+}
+
+### Correct with id mismatch
+PUT http://localhost:8080/api/employees/1
+Content-Type: application/json
+
+{
+  "id": 2,
   "name": "John Doe Doe"
 }
 

@@ -1,8 +1,11 @@
 package training.employees;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -18,13 +21,15 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public EmployeeDto joinEmployee(@RequestBody EmployeeDto employee) {
-        return employeeService.joinEmployee(employee);
+    public ResponseEntity<EmployeeDto> joinEmployee(@RequestBody EmployeeDto employee) {
+        EmployeeDto joined = employeeService.joinEmployee(employee);
+        // Még szebb megoldás: UriComponentsBuilder
+        return ResponseEntity.created(URI.create("/api/employees/%d".formatted(joined.id()))).body(joined);
     }
 
     @GetMapping("/{id}")
     public EmployeeDto findById(@PathVariable Long id) {
-        return employeeService.findById(id).orElseThrow();
+        return employeeService.findById(id);
     }
 
     @PutMapping("/{id}")
@@ -36,6 +41,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void leave(@PathVariable Long id) {
         employeeService.leave(id);
     }

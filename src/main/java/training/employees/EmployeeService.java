@@ -30,14 +30,16 @@ public class EmployeeService {
         return employeeToPersist;
     }
 
-    public Optional<EmployeeDto> findById(Long id) {
-        return employees.stream().filter(employee -> employee.id().equals(id)).findFirst();
+    public EmployeeDto findById(Long id) {
+        return employees.stream().filter(employee -> employee.id().equals(id)).
+                findFirst()
+                .orElseThrow(() -> new NotFoundException("Employee not found: %d".formatted(id)));
     }
 
     public EmployeeDto correct(EmployeeDto employee) {
         boolean exists = employees.removeIf(e -> e.id().equals(employee.id()));
         if (!exists) {
-            throw new IllegalArgumentException("Employee not found: %d".formatted(employee.id()));
+            throw new NotFoundException("Employee not found: %d".formatted(employee.id()));
         }
         employees.add(employee);
         return employee;
