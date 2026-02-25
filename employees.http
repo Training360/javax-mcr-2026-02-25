@@ -1,6 +1,9 @@
 ### List employees
 GET http://localhost:8080/api/employees
 
+### Find by id
+GET http://localhost:8080/api/employees/1
+
 ### Join employee
 POST http://localhost:8080/api/employees
 Content-Type: application/json
@@ -8,3 +11,15 @@ Content-Type: application/json
 {
   "name": "Jane Doe"
 }
+
+### Correct
+PUT http://localhost:8080/api/employees/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "John Doe Doe"
+}
+
+### Leave employee
+DELETE http://localhost:8080/api/employees/1
