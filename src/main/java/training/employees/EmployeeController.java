@@ -20,6 +20,11 @@ public class EmployeeController {
         return employeeService.findAll();
     }
 
+    @GetMapping("/names")
+    public List<SummaryEmployeeDto> findAllSummary() {
+        return employeeService.findAllSummary();
+    }
+
     @PostMapping
     public ResponseEntity<EmployeeDto> joinEmployee(@RequestBody EmployeeDto employee) {
         EmployeeDto joined = employeeService.joinEmployee(employee);

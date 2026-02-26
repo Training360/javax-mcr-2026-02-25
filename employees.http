@@ -1,6 +1,10 @@
 ### List employees
 GET http://localhost:8080/api/employees
 
+### List employees
+GET http://localhost:8080/api/employees/names
+
+
 ### Find by id
 GET http://localhost:8080/api/employees/1
 

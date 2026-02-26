@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOError;
 import java.util.List;
 
 @Service
@@ -14,9 +13,14 @@ public class EmployeeService {
     private final EmployeeRepository employeeRepository;
 
     public List<EmployeeDto> findAll() {
+        // CQRS: command and query responsibility segregation
         return employeeRepository
-                .findAll()
-                .stream().map(this::toDto).toList();
+                .findAllBy(EmployeeDto.class);
+    }
+
+    public List<SummaryEmployeeDto> findAllSummary() {
+        return employeeRepository
+                .findAllBy(SummaryEmployeeDto.class);
     }
 
     public EmployeeDto joinEmployee(EmployeeDto employee) {
