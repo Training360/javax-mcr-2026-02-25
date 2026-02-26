@@ -19,6 +19,31 @@ Content-Type: application/json
   "name": "Jane Doe"
 }
 
+### Invalid name
+POST http://localhost:8080/api/employees
+Content-Type: application/json
+
+{
+  "name": ""
+}
+
+### Invalid name
+POST http://localhost:8080/api/employees
+Content-Type: application/json
+
+{
+  "name": "john doe"
+}
+
+### Invalid name
+POST http://localhost:8080/api/employees
+Content-Type: application/json
+
+{
+  "name": "dr. John Doe"
+}
+
+
 ### Correct
 PUT http://localhost:8080/api/employees/1
 Content-Type: application/json

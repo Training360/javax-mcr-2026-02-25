@@ -1,5 +1,6 @@
 package training.employees;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<EmployeeDto> joinEmployee(@RequestBody EmployeeDto employee) {
+    public ResponseEntity<EmployeeDto> joinEmployee(@Valid @RequestBody EmployeeDto employee) {
         EmployeeDto joined = employeeService.joinEmployee(employee);
         // Még szebb megoldás: UriComponentsBuilder
         return ResponseEntity.created(URI.create("/api/employees/%d".formatted(joined.id()))).body(joined);
@@ -38,7 +39,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public EmployeeDto correct(@PathVariable Long id, @RequestBody EmployeeDto employee) {
+    public EmployeeDto correct(@PathVariable Long id, @Valid @RequestBody EmployeeDto employee) {
         if (!employee.id().equals(id)) {
             throw new IllegalArgumentException("Employee id mismatch: %d != %d".formatted(employee.id(), id));
         }
