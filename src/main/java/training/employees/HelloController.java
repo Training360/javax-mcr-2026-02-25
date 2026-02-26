@@ -14,7 +14,7 @@ public class HelloController {
 
     @GetMapping("/hello")
     public String hello(HelloParams params) {
-        log.info("Hello record %s %s %s".formatted(params.name(), params.yearOfBirth(), params.salary()));
+        log.info("Hello, parameters %s %s %s".formatted(params.name(), params.yearOfBirth(), params.salary()));
         return helloService.hello();
     }
 }
