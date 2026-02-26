@@ -26,6 +26,9 @@ public class EmployeeService {
     }
 
     public EmployeeDto joinEmployee(EmployeeDto employee) {
+        if (employeeRepository.findByName(employee.name()).isPresent()) {
+            throw new IllegalArgumentException("Employee name already exists: %s".formatted(employee.name()));
+        }
         Employee entity = employeeMapper.toEntity(employee);
         Employee saved = employeeRepository.save(entity);
         return employeeMapper.toDto(saved);
