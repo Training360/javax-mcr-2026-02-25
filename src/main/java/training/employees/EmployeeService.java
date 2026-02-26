@@ -12,6 +12,8 @@ public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
+    private final EmployeeMapper employeeMapper;
+
     public List<EmployeeDto> findAll() {
         // CQRS: command and query responsibility segregation
         return employeeRepository
@@ -24,17 +26,13 @@ public class EmployeeService {
     }
 
     public EmployeeDto joinEmployee(EmployeeDto employee) {
-        Employee entity = new Employee(employee.name());
+        Employee entity = employeeMapper.toEntity(employee);
         Employee saved = employeeRepository.save(entity);
-        return toDto(saved);
-    }
-
-    private EmployeeDto toDto(Employee entity) {
-        return new EmployeeDto(entity.getId(), entity.getName());
+        return employeeMapper.toDto(saved);
     }
 
     public EmployeeDto findById(Long id) {
-        return toDto(employeeRepository
+        return employeeMapper.toDto(employeeRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("Employee not found: %d".formatted(id))));
     }
@@ -45,7 +43,7 @@ public class EmployeeService {
                 .findById(employee.id())
                 .orElseThrow(() -> new NotFoundException("Employee not found: %d".formatted(employee.id())));
         entity.setName(employee.name());
-        return toDto(entity);
+        return employeeMapper.toDto(entity);
     }
 
     public void leave(long id) {
