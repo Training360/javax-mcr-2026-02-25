@@ -1,7 +1,21 @@
 services:
   employees-app:
-    image: employees-app
+    image: employees-app:0.0.1
+    depends_on:
+      employees-db:
+        condition: service_healthy
     ports:
-      - 8085:8080
+      - "8085:8080"
     environment:
       - HELLO_MESSAGE=Hello from Compose!
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://employees-db:5432/employees
+  employees-db:
+    image: postgres:18.2
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_DB=employees
+      - POSTGRES_USER=employees
+      - POSTGRES_PASSWORD=employees
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U employees"]
